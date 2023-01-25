@@ -110,4 +110,4 @@ def voice_analyzer():
     return render_template("voice.html", data=res2)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=2500)
+    app.run(host='0.0.0.0')
