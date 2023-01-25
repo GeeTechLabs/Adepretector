@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{{url_for('.static', filename='styles.css')}}">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block content%}
@@ -12,7 +13,57 @@
     <li style="float: left;"><a href="face" style="display: block; color: white;padding: 14px 16px;">Face</a></li>
     <li style="float: left;"><a href="voice" style="display: block; color: white;padding: 14px 16px;">Voice</a></li>
 </ul>
-    <a href="voice_recording"><img src="{{url_for('.static',filename = 'microphone.svg')}}"></a>
+    <button id="startRecording"><img src="{{ url_for('static', filename='microphone.svg') }}"></button>
     <h2 class="heading">{{data}}</h2>
-    <a href="voice_analyzer"><button class="voice_detect_btn">Detect</button></a>
+    <button id="stopRecording" class="voice_detect_btn">Detect</button>
+    
+    <script>
+        navigator
+            .mediaDevices
+            .getUserMedia({audio: true})
+            .then(stream => { handlerFunction(stream) });
+    
+        function handlerFunction(stream) {
+            rec = new MediaRecorder(stream);
+            rec.ondataavailable = e => {
+                audioChunks.push(e.data);
+                if (rec.state == "inactive") {
+                    let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+                    sendData(blob);
+                }
+            }
+        }
+    
+        function sendData(data) {
+            var form = new FormData();
+            form.append('file', data, 'data.mp3');
+            form.append('title', 'data.mp3');
+            //Chrome inspector shows that the post data includes a file and a title.
+            $.ajax({
+                type: 'POST',
+                url: '/voice_analyzer',
+                data: form,
+                cache: false,
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                console.log(data);
+            });
+        }
+    
+        startRecording.onclick = e => {
+            console.log('Recording has started..');
+            startRecording.disabled = true;
+            stopRecording.disabled = false;
+            audioChunks = [];
+            rec.start();
+        };
+    
+        stopRecording.onclick = e => {
+            console.log("Recording has stopped.");
+            startRecording.disabled = false;
+            stopRecording.disabled = true;
+            rec.stop();
+        };
+    </script>
     {% endblock %}

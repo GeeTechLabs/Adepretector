@@ -6,7 +6,7 @@ import librosa
 import glob 
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
-def alalyzer():
+def alalyzer(path_to_file):
     lb = LabelEncoder()
     json_file = open('model.json', 'r')
     loaded_model_json = json_file.read()
@@ -16,7 +16,7 @@ def alalyzer():
     loaded_model.load_weights("saved_models/Emotion_Voice_Detection_Model.h5")
     print("Loaded model from disk")
 
-    X, sample_rate = librosa.load('output10.wav', res_type='kaiser_fast',duration=2.5,sr=22050*2,offset=0.5)
+    X, sample_rate = librosa.load(path_to_file, res_type='kaiser_fast',duration=2.5,sr=22050*2,offset=0.5)
     sample_rate = np.array(sample_rate)
     mfccs = np.mean(librosa.feature.mfcc(y=X, sr=sample_rate, n_mfcc=13),axis=0)
     featurelive = mfccs

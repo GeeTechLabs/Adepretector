@@ -12,10 +12,10 @@
     <li style="float: left;"><a href="face" style="display: block; color: white;padding: 14px 16px;">Face</a></li>
     <li style="float: left;"><a href="voice" style="display: block; color: white;padding: 14px 16px;">Voice</a></li>
 </ul>
-<a href="qstn"><img src="{{url_for('.static',filename = 'bgm.svg')}}"></a>
+<a href="qstn"><img src="{{ url_for('static', filename = 'bgm.svg') }}"></a>
 <h2 class="heading">{{data}}</br></h2>
-<img class="icon" src="{{url_for('.static',filename = 'face-detection.svg')}}">
-<a href="expression"><button class="detect_btn">Detect</button></a>
+<img class="icon" src="{{ url_for('static', filename = 'face-detection.svg') }}">
+<a href="{{ url_for('expression') }}"><button class="detect_btn">Detect</button></a>
 <p>Press q to quit</p>
 
 
