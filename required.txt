@@ -40,7 +40,6 @@ pooch==1.6.0
 protobuf==3.19.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio==0.2.13
 pycparser==2.20
 pyparsing==2.4.7
 python-dateutil==2.8.1
@@ -57,7 +56,7 @@ SoundFile==0.10.3.post1
 tensorboard==2.11.2
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
-tensorflow==2.11.0
+tensorflow
 tensorflow-estimator==2.11.0
 tensorflow-intel==2.11.0
 tensorflow-io-gcs-filesystem==0.29.0
