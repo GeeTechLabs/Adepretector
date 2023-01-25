@@ -5,7 +5,7 @@ import test
 import videoTester
 import voiceAnalyzer
 import time
-import pyaudio
+# import pyaudio
 import os
 import wave
 import uuid
