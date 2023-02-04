@@ -25,6 +25,16 @@ def index():
 def home():
     return render_template("index.html")
 
+
+@app.route('/pricing')
+def pricing():
+    return render_template("index.html")
+
+
+@app.route('/about')
+def about():
+    return render_template("index.html")
+
 @app.route('/home2')
 def home2():
     return render_template("index2.html")

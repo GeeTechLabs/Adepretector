@@ -2,13 +2,13 @@
 
 
 {% block styles %}
-<link href="{{ url_for('static/assets/style', filename = 'voice.css') }}" rel="stylesheet" />
+<link href="{{ url_for('static', filename = '/assets/style/voice.css') }}" rel="stylesheet" />
 {% endblock styles %}
 
 {% block content %}
 <div class="home111-voice-card">
     <div class="home111-container3">
-      <img alt="image" src="{{ url_for('static/public/playground_assets', filename = 'microphone.svg) }}" class="home111-image2" />
+      <img alt="image" src="{{ url_for('static', filename = '/public/playground_assets/microphone.svg') }}" class="home111-image2" />
     </div>
     <div class="home111-testimonial">
       <div class="home111-container4">
