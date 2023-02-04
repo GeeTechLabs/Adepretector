@@ -159,9 +159,6 @@ def extract_feature(file_name, **kwargs):
     return result
 
 
-   
-
-
 if __name__ == "__main__":
     # load the saved model (after training)
     # model = pickle.load(open("result/mlp_classifier.model", "rb"))
