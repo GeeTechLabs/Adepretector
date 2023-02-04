@@ -1,69 +1,30 @@
 {% extends "bootstrap/base.html" %}
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('.static', filename='styles.css')}}">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-{% endblock %}
 
-{% block content%}
-<ul style="list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;">
-    <li style="float: left;"><a class="active" href="home" style="display: block; color: white;padding: 14px 16px;">Home</a></li>
-    <li style="float: left;"><a href="face" style="display: block; color: white;padding: 14px 16px;">Face</a></li>
-    <li style="float: left;"><a href="voice" style="display: block; color: white;padding: 14px 16px;">Voice</a></li>
-</ul>
-    <button id="startRecording" style="width: 20%; height: auto;"><img src="{{ url_for('static', filename='microphone.svg') }}"></button>
-    <h2 class="heading">{{data}}</h2>
-    <button id="stopRecording" class="voice_detect_btn">Detect</button>
-    
-    <script>
-        navigator
-            .mediaDevices
-            .getUserMedia({audio: true})
-            .then(stream => { handlerFunction(stream) });
-    
-        function handlerFunction(stream) {
-            rec = new MediaRecorder(stream);
-            rec.ondataavailable = e => {
-                audioChunks.push(e.data);
-                if (rec.state == "inactive") {
-                    let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
-                    sendData(blob);
-                }
-            }
-        }
-    
-        function sendData(data) {
-            var form = new FormData();
-            form.append('file', data, 'data.mp3');
-            form.append('title', 'data.mp3');
-            //Chrome inspector shows that the post data includes a file and a title.
-            $.ajax({
-                type: 'POST',
-                url: '/voice_analyzer',
-                data: form,
-                cache: false,
-                processData: false,
-                contentType: false
-            }).done(function(data) {
-                console.log(data);
-            });
-        }
-    
-        startRecording.onclick = e => {
-            console.log('Recording has started..');
-            startRecording.disabled = true;
-            stopRecording.disabled = false;
-            audioChunks = [];
-            rec.start();
-        };
-    
-        stopRecording.onclick = e => {
-            console.log("Recording has stopped.");
-            startRecording.disabled = false;
-            stopRecording.disabled = true;
-            rec.stop();
-        };
-    </script>
-    {% endblock %}
+
+{% block styles %}
+<link href="{{ url_for('static/assets/style', filename = 'voice.css') }}" rel="stylesheet" />
+{% endblock styles %}
+
+{% block content %}
+<div class="home111-voice-card">
+    <div class="home111-container3">
+      <img alt="image" src="{{ url_for('static/public/playground_assets', filename = 'microphone.svg) }}" class="home111-image2" />
+    </div>
+    <div class="home111-testimonial">
+      <div class="home111-container4">
+        <h1 class="home111-text">Click on Detect to Record</h1>
+      </div>
+      <div class="home111-deec-row">
+        <div class="home111-bn-container">
+          <button class="home111-button1 button">Detect</button>
+        </div>
+        <div class="home111-bn-container1">
+          <button class="home111-button2 button">Stop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

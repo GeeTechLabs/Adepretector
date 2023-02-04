@@ -22,8 +22,13 @@ def index():
     return render_template("index.html")
 
 @app.route('/home')
-def inde():
+def home():
     return render_template("index.html")
+
+@app.route('/home2')
+def home2():
+    return render_template("index2.html")
+
 
 @app.route('/qstn')
 def phq():
@@ -39,9 +44,18 @@ def expression():
 def face():
     return render_template("face.html", data="Anxiety and Depression Detection")
 
+@app.route('/face2') 
+def face2():
+    return render_template("face2.html", data="Anxiety and Depression Detection")
+
 @app.route('/voice')
 def voice():
     return render_template("voice.html", data="Click on the Mic to Record")
+
+@app.route('/voice2')
+def voice2():
+    return render_template("voice2.html", data="Click on the Mic to Record")
+
 
 # @app.route('/voice_recording')
 # def voice_recording():
