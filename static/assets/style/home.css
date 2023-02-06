@@ -233,7 +233,7 @@
   position: absolute;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: #333;
 }
 .home1-nav1 {
   display: flex;
