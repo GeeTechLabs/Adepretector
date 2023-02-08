@@ -24,6 +24,7 @@
 
   }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 
 {% block styles2 %}
@@ -42,15 +43,64 @@
       </div>
       <div class="home111-deec-row">
         <div class="home111-bn-container">
-          <button class="home111-button1 button">Detect</button>
+          <button id="startRecording" class="home111-button1 button">Detect</button>
         </div>
         <div class="home111-bn-container1">
-          <button class="home111-button2 button">Stop</button>
+          <button id="stopRecording" class="home111-button2 button">Stop</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 </div>
+<script>
+  navigator
+      .mediaDevices
+      .getUserMedia({audio: true})
+      .then(stream => { handlerFunction(stream) });
+
+  function handlerFunction(stream) {
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => {
+          audioChunks.push(e.data);
+          if (rec.state == "inactive") {
+              let blob = new Blob(audioChunks, {type: 'audio/mpeg-3'});
+              sendData(blob);
+          }
+      }
+  }
+
+  function sendData(data) {
+      var form = new FormData();
+      form.append('file', data, 'data.mp3');
+      form.append('title', 'data.mp3');
+      //Chrome inspector shows that the post data includes a file and a title.
+      $.ajax({
+          type: 'POST',
+          url: '/voice_analyzer',
+          data: form,
+          cache: false,
+          processData: false,
+          contentType: false
+      }).done(function(data) {
+          console.log(data);
+      });
+  }
+
+  startRecording.onclick = e => {
+      console.log('Recording has started..');
+      startRecording.disabled = true;
+      stopRecording.disabled = false;
+      audioChunks = [];
+      rec.start();
+  };
+
+  stopRecording.onclick = e => {
+      console.log("Recording has stopped.");
+      startRecording.disabled = false;
+      stopRecording.disabled = true;
+      rec.stop();
+  };
+</script>
 
 {% endblock %}
